@@ -1,35 +1,30 @@
---[[
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||        NVIM        ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
-
-Getting started tips:
-
-lua basics: https://learnxinyminutes.com/docs/lua/
-(html version): https://neovim.io/doc/user/lua-guide.html
-
-:help lua-guide
-:Tutor
-:help
-:help lazy.nvim-lazy.nvim-structuring-your-plugins
-
---]]
+--{{{ ASCII Greeting
+-- =====================================================================
+-- ==================== READ THIS BEFORE CONTINUING ====================
+-- =====================================================================
+-- ========                                    .-----.          ========
+-- ========         .----------------------.   | === |          ========
+-- ========         |.-""""""""""""""""""-.|   |-----|          ========
+-- ========         ||                    ||   | === |          ========
+-- ========         ||        NVIM        ||   |-----|          ========
+-- ========         ||                    ||   | === |          ========
+-- ========         ||                    ||   |-----|          ========
+-- ========         ||:Tutor              ||   |:::::|          ========
+-- ========         |'-..................-'|   |____o|          ========
+-- ========         `"")----------------(""`   ___________      ========
+-- ========        /::::::::::|  |::::::::::\  \ no mouse \     ========
+-- ========       /:::========|  |==hjkl==:::\  \ required \    ========
+-- ========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
+-- ========                                                     ========
+-- =====================================================================
+-- =====================================================================
+-- - https://learnxinyminutes.com/docs/lua/
+-- - https://neovim.io/doc/user/lua-guide.html
+-- - :Tutor
+-- - :help
+-- - :help lua-guide
+-- - :help lazy.nvim-lazy.nvim-structuring-your-plugins
+--}}}
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
@@ -37,7 +32,7 @@ vim.g.maplocalleader = ','
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
+-- Setting options {{{
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
@@ -77,7 +72,9 @@ vim.opt.inccommand = 'split' -- Preview substitutions live, as you type!
 vim.opt.cursorline = false -- Show which line your cursor is on
 vim.opt.scrolloff = 10 -- Min num screen lines to keep above/below cursor
 
--- [[ Basic Keymaps ]]
+-- }}}
+
+-- Basic Keymaps {{{
 --  See `:help vim.keymap.set()`
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
@@ -112,7 +109,15 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- [[ Basic Autocommands ]]
+-- }}}
+
+-- Key mapping for toggling folds
+vim.api.nvim_set_keymap('n', '<space>', 'za', { noremap = true, silent = true })
+
+-- Highlight settings for folded text
+-- vim.api.nvim_set_hl(0, 'Folded', { ctermbg = 'NONE', ctermfg = 67, fg = 'NONE' })
+
+-- Basic Autocommands {{{
 --  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
@@ -125,6 +130,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- Autocommand for setting fold options
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'vim', 'txt', 'python', 'tex', 'rmd', 'lua' },
+  callback = function()
+    vim.opt_local.foldmethod = 'marker'
+    vim.opt_local.foldmarker = '{{{,}}}'
+  end,
+  group = vim.api.nvim_create_augroup('FoldOptions', { clear = true }),
+  desc = 'Set folding options for specific file types',
+})
+
+-- Setup autocommand to reapply highlight settings after any colorscheme is loaded
+vim.api.nvim_create_autocmd('ColorScheme', {
+  callback = function()
+    vim.api.nvim_set_hl(0, 'Folded', { ctermbg = 'NONE', ctermfg = 67 })
+  end,
+  group = vim.api.nvim_create_augroup('CustomHighlightSettings', { clear = true }),
+  desc = 'Apply custom highlight settings after loading a colorscheme',
+})
+
+-- }}}
 
 -- [[ Install `lazy.nvim` plugin manager, then configure and install plugins ]]
 --

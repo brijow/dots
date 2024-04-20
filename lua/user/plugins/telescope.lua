@@ -104,3 +104,28 @@ return {
     end,
   },
 }
+-- "{{{ vimtex
+-- let g:tex_flavor='latex'
+-- let g:vimtex_view_method='skim'
+-- let g:vimtex_quickfix_mode=2
+--
+-- let g:vimtex_compiler_latexmk = {
+--         \ 'executable' : 'latexmk',
+--         \ 'options' : [
+--         \   '-xelatex',
+--         \   '-file-line-error',
+--         \   '-synctex=1',
+--         \   '-interaction=nonstopmode',
+--         \ ],
+--         \}
+--
+-- augroup vimtex_event_1
+-- au!
+-- au User VimtexEventQuit     VimtexClean
+-- "au User VimtexEventInitPost VimtexCompile
+-- augroup END
+-- "}}}
+-- "{{{ tex-conceal
+-- "set conceallevel=1
+-- "let g:tex_conceal="abdmg"
+-- "}}}
