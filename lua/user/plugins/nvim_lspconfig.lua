@@ -157,6 +157,25 @@ return {
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  ignore = {
+                    'W391',
+                    'W503',
+                  },
+                  maxLineLength = 120,
+                },
+                ruff = {
+                  enabled = true,
+                  extendSelect = { 'I' },
+                },
+              },
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},

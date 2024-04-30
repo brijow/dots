@@ -1,0 +1,45 @@
+return {
+  'RRethy/vim-illuminate',
+  lazy = true,
+  enabled = true,
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+  },
+  event = { 'CursorMoved', 'InsertLeave' },
+  config = function()
+    require('illuminate').configure {
+      filetypes_denylist = {
+        'dirbuf',
+        'dirvish',
+        'fugitive',
+        'alpha',
+        'DressingSelect',
+        'lir',
+        'neotree',
+        'neo-tree',
+        'neogitstatus',
+        'NvimTree',
+        'Outline',
+        'packer',
+        'spectre_panel',
+        'Telescope',
+        'telescope',
+        'TelescopePrompt',
+        'toggleterm',
+        'Trouble',
+      },
+      providers = {
+        'lsp',
+        'treesitter',
+        'regex',
+      },
+      delay = 100,
+      filetypes_allowlist = {},
+      modes_denylist = {},
+      modes_allowlist = {},
+      providers_regex_syntax_denylist = {},
+      providers_regex_syntax_allowlist = {},
+      under_cursor = true,
+    }
+  end,
+}
