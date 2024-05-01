@@ -68,14 +68,23 @@ return {
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<leader>tf', builtin.find_files, { desc = '[t]elescope search [F]iles' })
+      vim.keymap.set('n', '<leader>tg', builtin.live_grep, { desc = '[t]elescope search by [G]rep' })
+      vim.keymap.set('n', '<leader>tS', builtin.builtin, { desc = '[t]elescope search [S]elect Telescope' })
+      vim.keymap.set('n', '<leader>tw', builtin.grep_string, { desc = '[t]elescope search current [W]ord' })
       vim.keymap.set('n', '<leader>th', builtin.help_tags, { desc = '[t]elescope search [H]elp' })
       vim.keymap.set('n', '<leader>tk', builtin.keymaps, { desc = '[t]elescope search [K]eymaps' })
-      vim.keymap.set('n', '<leader>tf', builtin.find_files, { desc = '[t]elescope search [F]iles' })
-      vim.keymap.set('n', '<leader>ts', builtin.builtin, { desc = '[t]elescope search [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>tw', builtin.grep_string, { desc = '[t]elescope search current [W]ord' })
-      vim.keymap.set('n', '<leader>tg', builtin.live_grep, { desc = '[t]elescope search by [G]rep' })
-      vim.keymap.set('n', '<leader>td', builtin.diagnostics, { desc = '[t]elescope search [D]iagnostics' })
-      vim.keymap.set('n', '<leader>tr', builtin.resume, { desc = '[t]elescope search [R]esume' })
+      vim.keymap.set('n', '<leader>tR', builtin.resume, { desc = '[t]elescope search [R]esume' })
+      -- vim.keymap.set('n', '<leader>tr', '<cmd>Telescope lsp_references theme=ivy show_line=false trim_text=true<CR>')
+      -- vim.keymap.set('n', '<leader>k', [[<Cmd>lua require'brijow.telescope'.browse_notes()<CR>]])
+      -- vim.keymap.set('n', '<leader>td', "<cmd>lua require('telescope').extensions.dir.live_grep(require('telescope.themes').get_ivy({}))<cr>")
+
+      -- NOTE: is it necessary to use a function here?
+      vim.keymap.set('n', '<leader>tv', function()
+        builtin.find_files { cwd = vim.fn.stdpath 'config' }
+      end, { desc = '[t]elescope search Neo[v]im files' })
+
+      vim.keymap.set('n', '<leader>tD', builtin.diagnostics, { desc = '[t]elescope search [D]iagnostics' })
       vim.keymap.set('n', '<leader>t.', builtin.oldfiles, { desc = '[t]elescope search Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
@@ -97,10 +106,6 @@ return {
         }
       end, { desc = '[t]elescope search [/] in Open Files' })
 
-      -- Shortcut for searching your Neovim configuration files
-      vim.keymap.set('n', '<leader>tv', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[t]elescope search Neo[v]im files' })
     end,
   },
 }
