@@ -1,7 +1,3 @@
-# My Neovim config
-
-> *A recent rewrite of my config in lua that is closely based on the [kickstart.nvim project](https://github.com/nvim-lua/kickstart.nvim).*.
-
 ## Installation
 
 #### 1. Install Neovim
